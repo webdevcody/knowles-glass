@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const images = [
-  "/static/gallery/15.jpeg",
+  "/static/gallery/13.jpeg",
   "/static/gallery/7.jpeg",
   "/static/gallery/4.jpeg",
   "/static/gallery/11.jpeg",
@@ -32,33 +32,38 @@ const services = [
 
 function HeroSection() {
   return (
-    <section className="bg-white border-b pb-12 pt-2 sm:pt-4 md:pt-12 relative">
+    <section className="pattern bg-blue-100 border-b pb-12 pt-2 sm:pt-4 md:pt-12 relative w-full shadow z-10">
       <div id="home" className="absolute -top-20"></div>
       <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-8 lg:grid-cols-12">
         <div className="mr-auto place-self-center lg:col-span-7">
           <h1 className="max-w-2xl mb-4 text-4xl tracking-tight leading-none md:text-5xl xl:text-6xl">
             Glass Installation in South Florida
           </h1>
-          <p className="max-w-2xl mb-6 font-light lg:mb-8 md:text-lg lg:text-xl text-gray-600">
+          <p className="max-w-2xl font-light md:text-lg lg:text-xl text-gray-600">
             Our company believes in the core values of customer satisfaction,
             dependability, and integrity, as these values shape our employees
             and the quality of our work.
           </p>
+          <blockquote className="text-xl font-semibold text-gray-900 py-4">
+            <p>
+              Ready to <i>&quot;Let the Light in&quot;</i>?
+            </p>
+          </blockquote>
           <Link
             href="#contact"
-            className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-700 rounded-lg hover:bg-gray-700 hover:text-white focus:ring-4 "
+            className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center hover:text-gray-900 border hover:border-gray-700 hover:bg-gray-100 rounded-lg bg-gray-700 text-white focus:ring-4 "
           >
             Contact Us
           </Link>
         </div>
-        <div className="order-first lg:order-none lg:mt-0 lg:col-span-5 lg:flex mb-4 flex">
+        <div className="flex flex-col gap-4 text-center order-first lg:order-none lg:mt-0 lg:col-span-5 lg:flex mb-4">
           <Image
             priority
             width="500"
             height="300"
             src="/static/gallery/2.jpeg"
             alt="mockup"
-            className="hidden lg:block rounded"
+            className="hidden lg:block "
           />
           <Image
             priority
@@ -66,8 +71,11 @@ function HeroSection() {
             height="300"
             src="/static/home/building.png"
             alt="mockup"
-            className="rounded lg:hidden"
+            className=" lg:hidden"
           />
+          <div className="italic">
+            A recent ALDI market we serviced in Palm Beach
+          </div>
         </div>
       </div>
     </section>
@@ -89,32 +97,72 @@ function AboutSection() {
             quality services to our customers, and we pride ourselves on
             dependability, productivity, and professionalism as we provide our
             services to our customers.
+            <br />
+            <br />
+            We do both <b>commercial</b> and <b>residential </b>
+            buildings.
           </p>
         </div>
-
-        <div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service, index) => (
-              <div
-                key={index}
-                className="bg-white shadow-lg rounded-lg overflow-hidden"
-              >
-                <Image
-                  width="300"
-                  height="100"
-                  src={images[index]}
-                  alt={service.title}
-                  className="w-full h-48 object-cover object-center"
-                />
-                <div className="p-4">
-                  <h3 className="text-2xl font-semibold text-gray-800">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-600 mt-2">{service.description}</p>
-                </div>
-              </div>
-            ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="bg-white shadow rounded-lg overflow-hidden">
+            <Image
+              width="300"
+              height="100"
+              src={"/static/gallery/4.jpeg"}
+              alt="picture of commerical building"
+              className="w-full h-48 object-cover object-center"
+            />
+            <div className="p-4">
+              <h3 className="text-2xl font-semibold text-gray-800">
+                Commercial Construction
+              </h3>
+              <p className="text-gray-600 mt-2">
+                We service commerical building needing various glass and glazing
+                needs
+              </p>
+            </div>
           </div>
+
+          <div className="bg-white shadow rounded-lg overflow-hidden">
+            <Image
+              width="500"
+              height="300"
+              src={"/static/gallery/15.jpeg"}
+              alt="picture of commerical building"
+              className="w-full h-48 object-cover object-center"
+            />
+            <div className="p-4">
+              <h3 className="text-2xl font-semibold text-gray-800">
+                Residential Buildings
+              </h3>
+              <p className="text-gray-600 mt-2">
+                We service commerical building needing various glass and glazing
+                needs
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {services.map((service, index) => (
+            <div
+              key={index}
+              className="bg-white shadow rounded-lg overflow-hidden"
+            >
+              <Image
+                width="300"
+                height="100"
+                src={images[index]}
+                alt={service.title}
+                className="w-full h-48 object-cover object-center"
+              />
+              <div className="p-4">
+                <h3 className="text-2xl font-semibold text-gray-800">
+                  {service.title}
+                </h3>
+                <p className="text-gray-600 mt-2">{service.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -204,7 +252,7 @@ function Gallery() {
 
 function Contact() {
   return (
-    <section className="relative py-12 w-full">
+    <section className="pattern-secondary relative py-24 w-full shadow z-10">
       <div className="container mx-auto flex flex-col items-center ">
         <div id="contact" className="absolute -top-20"></div>
         <h2 className="text-center max-w-2xl mb-8 text-4xl tracking-tight leading-none md:text-4xl xl:text-5xl">

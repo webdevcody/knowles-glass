@@ -31,18 +31,6 @@ export function Header() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const scrollToBottomMinus200 = () => {
-    // Calculate the scroll position to the bottom of the page minus 200 pixels
-    const scrollPosition =
-      document.documentElement.scrollHeight - window.innerHeight - 200;
-
-    // Scroll to the calculated position
-    window.scrollTo({
-      top: scrollPosition,
-      behavior: "smooth", // Use smooth scrolling for a smooth animation
-    });
-  };
-
   return (
     <>
       <div
@@ -104,7 +92,6 @@ export function Header() {
                 href="#contact"
                 onClick={() => {
                   setIsMobileMenuOpen(false);
-                  scrollToBottomMinus200();
                 }}
                 className="block text-lg py-2"
               >
