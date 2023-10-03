@@ -85,37 +85,43 @@ export function Header() {
                 : "absolute"
             }
           >
-            <div className="mt-2 text-center mb-4">
-              <a
-                href="#home"
+            <div className="mt-2 text-center mb-4 flex flex-col justify-center">
+              <button
+                onClick={() => {
+                  scrollTo("#home");
+                  setIsMobileMenuOpen(false);
+                }}
                 className="block text-lg py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Home
-              </a>
-              <a
-                onClick={() => setIsMobileMenuOpen(false)}
-                href="#about"
+              </button>
+              <button
+                onClick={() => {
+                  scrollTo("#about");
+                  setIsMobileMenuOpen(false);
+                }}
                 className="block text-lg py-2"
               >
                 About
-              </a>
-              <a
-                href="#contact"
+              </button>
+              <button
                 onClick={() => {
+                  scrollTo("#contact");
                   setIsMobileMenuOpen(false);
                 }}
                 className="block text-lg py-2"
               >
                 Contact Us
-              </a>
-              <a
-                onClick={() => setIsMobileMenuOpen(false)}
-                href="#gallery"
+              </button>
+              <button
+                onClick={() => {
+                  scrollTo("#gallery");
+                  setIsMobileMenuOpen(false);
+                }}
                 className="block text-lg py-2"
               >
                 Gallery
-              </a>
+              </button>
             </div>
           </div>
         )}
