@@ -68,6 +68,12 @@ export function Header() {
               Contact Us
             </button>
             <button
+              onClick={() => scrollTo("#location")}
+              className="hover:text-blue-500"
+            >
+              Location
+            </button>
+            <button
               onClick={() => scrollTo("#gallery")}
               className="hover:text-blue-500"
             >
@@ -112,6 +118,15 @@ export function Header() {
                 className="block text-lg py-2"
               >
                 Contact Us
+              </button>
+              <button
+                onClick={() => {
+                  scrollTo("#location");
+                  setIsMobileMenuOpen(false);
+                }}
+                className="block text-lg py-2"
+              >
+                Location
               </button>
               <button
                 onClick={() => {

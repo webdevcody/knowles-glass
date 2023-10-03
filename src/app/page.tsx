@@ -281,6 +281,39 @@ function Contact() {
   );
 }
 
+function CountiesSection() {
+  return (
+    <section className="py-12 relative container mx-auto w-full">
+      <div id="location" className="absolute -top-20"></div>
+
+      <h2 className="w-full text-center mb-12 text-4xl tracking-tight leading-none md:text-4xl xl:text-5xl">
+        Counties We Service
+      </h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 md:gap-12">
+        <div>
+          <ul className="text-center text-2xl gap-4 justify-center h-full flex flex-col w-full">
+            <li>Miami Dade</li>
+            <li>Broward County</li>
+            <li>Palm Beach County</li>
+            <li>Fort Pierce</li>
+            <li>Martin County</li>
+            <li>St Lucie County </li>
+          </ul>
+        </div>
+        <div className="col-span-2 order-first md:order-none">
+          <Image
+            src="/static/florida.png"
+            width="1200"
+            height="800"
+            alt="a map of florida"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CopyrightFooter() {
   return (
     <footer className=" py-8 text-gray-600 text-center w-full">
@@ -295,6 +328,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between">
       <HeroSection />
       <AboutSection />
+      <CountiesSection />
       <Contact />
       <Gallery />
       <CopyrightFooter />
