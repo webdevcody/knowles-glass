@@ -10,22 +10,22 @@
     "deploy": ". ./load-env.sh .env.prod && sst deploy --stage prod"
   },
   "dependencies": {
+    "next": "13.5.4",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "13.5.4"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
-    "postcss": "^8",
-    "tailwindcss": "^3",
-    "eslint": "^8",
-    "eslint-config-next": "13.5.4",
     "aws-cdk-lib": "2.95.1",
     "constructs": "10.2.69",
-    "sst": "^2.26.8"
+    "eslint": "^8",
+    "eslint-config-next": "13.5.4",
+    "postcss": "^8",
+    "sst": "^2.26.8",
+    "tailwindcss": "^3",
+    "typescript": "^5"
   }
 }

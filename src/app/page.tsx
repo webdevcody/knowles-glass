@@ -1,5 +1,7 @@
+"use client";
+
+import { scrollTo } from "@/utils/scrollTo";
 import Image from "next/image";
-import Link from "next/link";
 
 const images = [
   "/static/gallery/13.jpeg",
@@ -49,12 +51,12 @@ function HeroSection() {
               Ready to <i>&quot;Let the Light in&quot;</i>?
             </p>
           </blockquote>
-          <Link
-            href="#contact"
+          <button
+            onClick={() => scrollTo("#contact")}
             className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center hover:text-gray-900 border hover:border-gray-700 hover:bg-gray-100 rounded-lg bg-gray-700 text-white focus:ring-4 "
           >
             Contact Us
-          </Link>
+          </button>
         </div>
         <div className="flex flex-col gap-4 text-center order-first lg:order-none lg:mt-0 lg:col-span-5 lg:flex mb-4">
           <Image

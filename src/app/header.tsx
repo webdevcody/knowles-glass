@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Menu } from "@/components/menu";
-import { Close } from "@/components/close";
+import { scrollTo } from "@/utils/scrollTo";
 
 export function Header() {
   const [isSticky, setIsSticky] = useState(false);
@@ -49,18 +49,30 @@ export function Header() {
           </button>
 
           <div className="hidden md:flex gap-8 text-lg">
-            <a href="#home" className="hover:text-blue-500">
+            <button
+              onClick={() => scrollTo("#home")}
+              className="hover:text-blue-500"
+            >
               Home
-            </a>
-            <a href="#about" className="hover:text-blue-500">
+            </button>
+            <button
+              onClick={() => scrollTo("#about")}
+              className="hover:text-blue-500"
+            >
               About
-            </a>
-            <a href="#contact" className="hover:text-blue-500">
+            </button>
+            <button
+              onClick={() => scrollTo("#contact")}
+              className="hover:text-blue-500"
+            >
               Contact Us
-            </a>
-            <a href="#gallery" className="hover:text-blue-500">
+            </button>
+            <button
+              onClick={() => scrollTo("#gallery")}
+              className="hover:text-blue-500"
+            >
               Gallery
-            </a>
+            </button>
           </div>
         </div>
 
