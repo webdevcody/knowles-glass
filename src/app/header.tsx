@@ -40,14 +40,12 @@ export function Header() {
       >
         <div className="container mx-auto items-center justify-between flex">
           <Image src="/static/logo.png" alt="logo" width="150" height="100" />
-
           <button
             onClick={toggleMobileMenu}
             className="md:hidden text-gray-500 hover:text-blue-500 mr-4"
           >
             <Menu />
           </button>
-
           <div className="hidden md:flex gap-8 text-lg">
             <button
               onClick={() => scrollTo("#home")}
@@ -62,16 +60,16 @@ export function Header() {
               About
             </button>
             <button
-              onClick={() => scrollTo("#contact")}
-              className="hover:text-blue-500"
-            >
-              Contact Us
-            </button>
-            <button
               onClick={() => scrollTo("#location")}
               className="hover:text-blue-500"
             >
               Location
+            </button>
+            <button
+              onClick={() => scrollTo("#contact")}
+              className="hover:text-blue-500"
+            >
+              Contact Us
             </button>
             <button
               onClick={() => scrollTo("#gallery")}
@@ -112,21 +110,21 @@ export function Header() {
               </button>
               <button
                 onClick={() => {
-                  scrollTo("#contact");
-                  setIsMobileMenuOpen(false);
-                }}
-                className="block text-lg py-2"
-              >
-                Contact Us
-              </button>
-              <button
-                onClick={() => {
                   scrollTo("#location");
                   setIsMobileMenuOpen(false);
                 }}
                 className="block text-lg py-2"
               >
                 Location
+              </button>
+              <button
+                onClick={() => {
+                  scrollTo("#contact");
+                  setIsMobileMenuOpen(false);
+                }}
+                className="block text-lg py-2"
+              >
+                Contact Us
               </button>
               <button
                 onClick={() => {

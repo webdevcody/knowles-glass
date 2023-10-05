@@ -1,6 +1,6 @@
 import { SSTConfig } from "sst";
 import { NextjsSite } from "sst/constructs";
-import * as acm from "aws-cdk-lib/aws-certificatemanager";
+import { RetentionDays } from "aws-cdk-lib/aws-logs";
 
 export default {
   config(_input) {
@@ -11,21 +11,17 @@ export default {
   },
   stacks(app) {
     app.stack(function Site({ stack }) {
-      const certificate = acm.Certificate.fromCertificateArn(
-        stack,
-        "Certificate",
-        `arn:aws:acm:us-east-1:493255580566:certificate/d13e3d50-9583-4379-a921-674bc31a6d2d`
-      );
-
       const site = new NextjsSite(stack, "site", {
         customDomain: {
-          domainName: "knowlesglass.webdevcody.com",
-          isExternalDomain: true,
-          cdk: {
-            certificate,
+          domainName: "knowlesglassandglazing.com",
+          domainAlias: "www.knowlesglassandglazing.com",
+        },
+        timeout: "10 seconds",
+        cdk: {
+          server: {
+            logRetention: RetentionDays.ONE_DAY,
           },
         },
-        timeout: "30 seconds",
         environment: {},
       });
 
