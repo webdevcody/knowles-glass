@@ -4,7 +4,7 @@ import { scrollTo } from "@/utils/scrollTo";
 import Image from "next/image";
 
 const images = [
-  "/static/gallery/13.jpeg",
+  "/static/new/curtain.jpg",
   "/static/gallery/7.jpeg",
   "/static/gallery/4.jpeg",
   "/static/gallery/11.jpeg",
@@ -63,7 +63,7 @@ function HeroSection() {
             priority
             width="500"
             height="300"
-            src="/static/gallery/2.jpeg"
+            src="/static/gallery/4.jpeg"
             alt="mockup"
             className="hidden lg:block "
           />
@@ -71,12 +71,12 @@ function HeroSection() {
             priority
             width="500"
             height="300"
-            src="/static/home/building.png"
+            src="/static/gallery/4.jpeg"
             alt="mockup"
-            className=" lg:hidden"
+            className="lg:hidden"
           />
           <div className="italic">
-            A recent ALDI market we serviced in Palm Beach
+            A recent gas station we serviced in Palm Beach
           </div>
         </div>
       </div>
@@ -118,10 +118,6 @@ function AboutSection() {
               <h3 className="text-2xl font-semibold text-gray-800">
                 Commercial Construction
               </h3>
-              <p className="text-gray-600 mt-2">
-                We service commerical building needing various glass and glazing
-                needs
-              </p>
             </div>
           </div>
 
@@ -137,10 +133,6 @@ function AboutSection() {
               <h3 className="text-2xl font-semibold text-gray-800">
                 Residential Buildings
               </h3>
-              <p className="text-gray-600 mt-2">
-                We service commerical building needing various glass and glazing
-                needs
-              </p>
             </div>
           </div>
         </div>
@@ -181,8 +173,9 @@ function Gallery() {
       </h2>
 
       <p className="text-center text-gray-600 text-lg mb-8 w-full md:w-1/2 px-4 md:px-2">
-        We have worked with a variety of types of commerical building, including
-        gas stations, super markets, churches, etc. Checkout our gallery below!
+        We have worked with a wide variety of commerical, and residential
+        buildings, including gas stations, supermarkets, churches, and more!
+        Checkout out our gallery below!
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
@@ -194,29 +187,24 @@ function Gallery() {
             alt=""
           />
           <Image src="/static/gallery/1.jpeg" width="300" height="100" alt="" />
-          <Image
-            width="300"
-            height="100"
-            src="/static/gallery/13.jpeg"
-            alt=""
-          />
           <Image width="300" height="100" src="/static/gallery/9.jpeg" alt="" />
+          <Image width="300" height="100" src="/static/new/4.jpg" alt="" />
         </div>
 
         <div className="flex flex-col gap-4">
-          <Image src="/static/gallery/2.jpeg" width="300" height="100" alt="" />
-          <Image src="/static/gallery/5.jpeg" width="300" height="100" alt="" />
-          <Image src="/static/gallery/6.jpeg" width="300" height="100" alt="" />
+          <Image src="/static/new/5.jpg" width="300" height="100" alt="" />
+          <Image src="/static/new/2.jpg" width="300" height="100" alt="" />
           <Image
             src="/static/gallery/11.jpeg"
             width="300"
             height="100"
             alt=""
           />
+          <Image src="/static/gallery/7.jpeg" width="300" height="100" alt="" />
         </div>
 
         <div className="flex flex-col gap-4">
-          <Image src="/static/gallery/8.jpeg" width="300" height="100" alt="" />
+          <Image src="/static/new/1.jpg" width="300" height="100" alt="" />
           <Image src="/static/gallery/4.jpeg" width="300" height="100" alt="" />
           <Image
             src="/static/gallery/10.jpeg"
@@ -224,28 +212,17 @@ function Gallery() {
             height="100"
             alt=""
           />
-          <Image src="/static/gallery/7.jpeg" width="300" height="100" alt="" />
         </div>
         <div className="flex flex-col gap-4">
-          <Image src="/static/gallery/3.jpeg" width="300" height="100" alt="" />
+          <Image src="/static/new/6.jpg" width="300" height="100" alt="" />
           <Image
             src="/static/gallery/15.jpeg"
             width="300"
             height="100"
             alt=""
           />
-          <Image
-            src="/static/gallery/14.jpeg"
-            width="300"
-            height="100"
-            alt=""
-          />
-          <Image
-            src="/static/gallery/13.jpeg"
-            width="300"
-            height="100"
-            alt=""
-          />
+          <Image src="/static/new/4.jpg" width="300" height="100" alt="" />
+          <Image src="/static/new/3.jpg" width="300" height="100" alt="" />
         </div>
       </div>
     </section>
@@ -293,17 +270,28 @@ function CountiesSection() {
       <div className="grid grid-cols-1 md:grid-cols-3 md:gap-12">
         <div>
           <ul className="text-center text-2xl gap-4 justify-center h-full flex flex-col w-full">
-            <li>Miami Dade</li>
-            <li>Broward County</li>
-            <li>Palm Beach County</li>
-            <li>Fort Pierce</li>
+            <li>Manatee County</li>
+            <li>Hardee County</li>
+            <li>Highlands County</li>
+            <li>Okeechobee County</li>
+            <li>St Lucie County</li>
+            <li>Sarasota County</li>
+            <li>DeSOTO County</li>
             <li>Martin County</li>
-            <li>St Lucie County </li>
+            <li>Charlotte County</li>
+            <li>Glades County</li>
+            <li>Lee County</li>
+            <li>Hendry County</li>
+            <li>Palm Beach County</li>
+            <li>Collier County</li>
+            <li>Broward County</li>
+            <li>Monroe County</li>
+            <li>Miami Dade</li>
           </ul>
         </div>
         <div className="col-span-2 order-first md:order-none">
           <Image
-            src="/static/florida.png"
+            src="/static/florida5.png"
             width="1200"
             height="800"
             alt="a map of florida"
