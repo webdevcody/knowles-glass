@@ -36,4 +36,6 @@ EXPOSE 3000
 
 ENV PORT=3000
 
-CMD HOSTNAME="knowles-glass" node server.js
+ARG HOSTNAME
+
+CMD node server.js
