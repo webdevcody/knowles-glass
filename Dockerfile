@@ -1,41 +1,25 @@
-FROM node:20-slim AS base
-
-FROM base AS builder
+ARG BUN_VERSION=1.1.12
+FROM oven/bun:${BUN_VERSION}-slim as base
 
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
-RUN npm ci
-COPY . .
+ENV NODE_ENV="production"
 
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV NODE_ENV=production
+FROM base as build
 
-RUN npm run build
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y build-essential pkg-config python-is-python3
 
-FROM base AS runner
-WORKDIR /app
+COPY --link bun.lockb package.json ./
+RUN bun install --ci
 
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV NODE_ENV=production
+COPY --link . .
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN bun build:tailwind
 
-COPY --from=builder /app/public ./public
+FROM base
 
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
-
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-USER nextjs
+COPY --from=build /app /app
 
 EXPOSE 3000
-
-ENV PORT=3000
-
-ARG HOSTNAME
-
-CMD node server.js
+CMD [ "bun", "start" ]
