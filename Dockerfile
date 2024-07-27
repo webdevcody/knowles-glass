@@ -1,5 +1,4 @@
-ARG BUN_VERSION=1.1.12
-FROM oven/bun:${BUN_VERSION}-slim as base
+FROM node:20-slim AS base
 
 WORKDIR /app
 
@@ -10,16 +9,16 @@ FROM base as build
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential pkg-config python-is-python3
 
-COPY --link bun.lockb package.json ./
-RUN bun install --ci
+COPY --link package-lock.json package.json ./
+RUN node ci
 
 COPY --link . .
 
-RUN bun build:tailwind
+RUN npm run build:tailwind
 
 FROM base
 
 COPY --from=build /app /app
 
 EXPOSE 3000
-CMD [ "bun", "start" ]
+CMD [ "npm", "start" ]

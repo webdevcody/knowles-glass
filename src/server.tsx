@@ -1,6 +1,7 @@
-import { Hono } from "hono";
-import { serveStatic } from "hono/bun";
 import { registerLanding } from "./pages";
+import { serveStatic } from "@hono/node-server/serve-static";
+import { serve } from "@hono/node-server";
+import { Hono } from "hono";
 
 const app = new Hono();
 
@@ -17,4 +18,4 @@ app.notFound((c) => {
   return c.html("not found bro");
 });
 
-export default app;
+serve(app);
