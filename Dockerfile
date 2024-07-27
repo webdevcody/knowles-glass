@@ -10,7 +10,7 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential pkg-config python-is-python3
 
 COPY --link package-lock.json package.json ./
-RUN node ci
+RUN npm ci
 
 COPY --link . .
 
