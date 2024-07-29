@@ -23,7 +23,7 @@ func main() {
 	// }
 
 	app := fiber.New(fiber.Config{
-		Network: fiber.NetworkTCP6,
+		Network: fiber.NetworkTCP,
 	})
 
 	app.Static("/public", "./public")
