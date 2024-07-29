@@ -22,10 +22,9 @@ func main() {
 	// 	fmt.Printf("Resolved addresses for %s: %v\n", hostname, addr)
 	// }
 
-	app := fiber.New()
-	// fiber.Config{
-	// 	Network: fiber.NetworkTCP6,
-	// }
+	app := fiber.New(fiber.Config{
+		Network: fiber.NetworkTCP6,
+	})
 
 	app.Static("/public", "./public")
 
