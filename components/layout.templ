@@ -1,0 +1,25 @@
+package components
+
+templ Layout() {
+	@HtmlWrapper() {
+		@header()
+		{ children... }
+	}
+}
+
+templ HtmlWrapper() {
+	<html>
+		<head>
+			<title>Mailing List</title>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<link
+				href="/public/styles.css"
+				rel="stylesheet"
+			/>
+		</head>
+		<body>
+			{ children... }
+		</body>
+	</html>
+}

@@ -1,15 +1,16 @@
-# wdc-starter-kit-promo
+# How to Run
 
-To install dependencies:
+1. make dev
+2. open http://localhost:7331/dashboard
 
-```bash
-bun install
-```
+# TODO
 
-To run:
-
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v1.1.12. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+- send emails to ses
+  - subject
+  - html
+  - text
+- header
+  - link to mjml
+  - login
+  - logout
+- search through emails

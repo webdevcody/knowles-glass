@@ -1,24 +1,31 @@
-FROM node:20-slim AS base
+FROM golang:1.22.5-bullseye as base
 
+# Build Layer
+FROM base AS builder
 WORKDIR /app
-
-ENV NODE_ENV="production"
-
-FROM base as build
-
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential pkg-config python-is-python3
+    apt-get install --no-install-recommends -y build-essential pkg-config python-is-python3 
 
-COPY --link package-lock.json package.json ./
+    RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash - && \
+    apt-get install -y nodejs \
+    build-essential && \
+    node --version && \ 
+    npm --version
+
+RUN go install github.com/a-h/templ/cmd/templ@latest
+
+COPY go.mod go.sum package-lock.json package.json ./
 RUN npm ci
+RUN go version
+RUN go mod tidy
+COPY . .
+RUN make build
 
-COPY --link . .
-
-RUN npm run build:tailwind
-
-FROM base
-
-COPY --from=build /app /app
-
+FROM scratch
+WORKDIR /app
+COPY --from=builder /app/bin .
+COPY --from=builder /app/public ./public
+ARG DATABASE_URL
+ARG HTTP_LISTEN_ADDR
 EXPOSE 3000
-CMD [ "npm", "start" ]
+CMD [ "/app/app_prod" ]
