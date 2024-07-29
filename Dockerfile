@@ -21,6 +21,7 @@ RUN go mod tidy
 COPY . .
 RUN make build
 ARG DATABASE_URL
+ARG HOSTNAME
 ARG HTTP_LISTEN_ADDR
 CMD [ "go", "run" ,"cmd/app/main.go" ]
 
