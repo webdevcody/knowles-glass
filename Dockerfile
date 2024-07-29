@@ -20,12 +20,15 @@ RUN go version
 RUN go mod tidy
 COPY . .
 RUN make build
-
-FROM scratch
-WORKDIR /app
-COPY --from=builder /app/bin .
-COPY --from=builder /app/public ./public
 ARG DATABASE_URL
 ARG HTTP_LISTEN_ADDR
-EXPOSE 3000
-CMD [ "/app/app_prod" ]
+CMD [ "go", "run" ,"cmd/app/main.go" ]
+
+# FROM scratch
+# WORKDIR /app
+# COPY --from=builder /app/bin .
+# COPY --from=builder /app/public ./public
+# ARG DATABASE_URL
+# ARG HTTP_LISTEN_ADDR
+# EXPOSE 3000
+# CMD [ "/app/app_prod" ]
