@@ -20,7 +20,7 @@ func main() {
 			fmt.Printf("Failed to resolve hostname %s: %v\n", hostname, err)
 			os.Exit(1)
 		}
-		addr = addrs[0] + ":3000"
+		addr = fmt.Sprintf("[%s]", addrs[0]) + ":3000"
 		fmt.Printf("Resolved addresses for %s: %v\n", hostname, addr)
 	}
 
