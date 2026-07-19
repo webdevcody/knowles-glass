@@ -1,78 +1,128 @@
 import { html } from "hono/html";
-import { MenuIcon } from "./icons";
+import { BUSINESS_NAME, PHONE_DISPLAY, PHONE_HREF } from "../business";
+import { CloseIcon, MenuIcon, PhoneIcon } from "./icons";
 
 export function Header() {
   return (
     <>
-      <div
-        class={`fixed left-0 right-0 top-0 z-50 border-b bg-white text-gray-900 shadow-lg`}
-      >
-        <div class="container mx-auto flex items-center justify-between">
-          <a href="#home">
-            <img src="/static/logo.png" alt="logo" width="150" height="100" />
+      <a class="skip-link" href="#main-content">
+        Skip to main content
+      </a>
+
+      <header class="site-header">
+        <div class="site-header__inner">
+          <a
+            class="brand-link"
+            href="#home"
+            aria-label={`${BUSINESS_NAME} home`}
+          >
+            <img
+              class="brand-logo"
+              src="/static/logo.png"
+              alt={BUSINESS_NAME}
+              width="500"
+              height="250"
+            />
           </a>
+
+          <nav class="desktop-nav" aria-label="Primary navigation">
+            <a href="#services">Services</a>
+            <a href="#work">Our work</a>
+            <a href="#service-area">Service area</a>
+            <a href="#about">About</a>
+          </nav>
+
+          <a class="header-call" href={PHONE_HREF}>
+            <PhoneIcon />
+            <span>{PHONE_DISPLAY}</span>
+          </a>
+
           <button
             id="toggle-menu"
-            class="mr-4 text-gray-500 hover:text-blue-500 md:hidden"
+            class="menu-toggle"
+            type="button"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+            aria-label="Open navigation menu"
           >
-            <MenuIcon />
+            <span id="menu-open-icon">
+              <MenuIcon />
+            </span>
+            <span id="menu-close-icon" class="hidden">
+              <CloseIcon />
+            </span>
           </button>
-          <div class="hidden gap-8 text-lg md:flex">
-            <a href="#home" class="hover:text-blue-500">
-              Home
-            </a>
-            <a href="#about" class="hover:text-blue-500">
-              About
-            </a>
-            <a href="#location" class="hover:text-blue-500">
-              Location
-            </a>
-            <a href="#contact" class="hover:text-blue-500">
-              Contact Us
-            </a>
-            <a href="#gallery" class="hover:text-blue-500">
-              Gallery
-            </a>
-          </div>
         </div>
 
-        <div
+        <nav
           id="mobile-menu"
-          class={`relative hidden w-full border-t bg-white text-center md:hidden`}
+          class="mobile-nav hidden"
+          aria-label="Mobile navigation"
         >
-          <div class="mb-4 mt-2 flex flex-col justify-center text-center">
-            <a href="#home" class="block py-2 text-lg">
-              Home
-            </a>
-            <a href="#about" class="block py-2 text-lg">
-              About
-            </a>
-            <a href="#location" class="block py-2 text-lg">
-              Location
-            </a>
-            <a href="#contact" class="block py-2 text-lg">
-              Contact Us
-            </a>
-            <a href="#gallery" class="block py-2 text-lg">
-              Gallery
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div className="h-[75px]"></div>
+          <a href="#services">Services</a>
+          <a href="#work">Our work</a>
+          <a href="#service-area">Service area</a>
+          <a href="#about">About</a>
+          <a class="mobile-nav__call" href={PHONE_HREF}>
+            <PhoneIcon />
+            Call {PHONE_DISPLAY}
+          </a>
+        </nav>
+      </header>
 
       {html`
         <script>
-          document
-            .getElementById("toggle-menu")
-            .addEventListener("click", () => {
-              document.getElementById("mobile-menu").classList.toggle("hidden");
+          document.addEventListener("DOMContentLoaded", () => {
+            const toggle = document.getElementById("toggle-menu");
+            const menu = document.getElementById("mobile-menu");
+            const openIcon = document.getElementById("menu-open-icon");
+            const closeIcon = document.getElementById("menu-close-icon");
+
+            if (!toggle || !menu || !openIcon || !closeIcon) return;
+
+            const setMenuOpen = (isOpen) => {
+              menu.classList.toggle("hidden", !isOpen);
+              openIcon.classList.toggle("hidden", isOpen);
+              closeIcon.classList.toggle("hidden", !isOpen);
+              toggle.setAttribute("aria-expanded", String(isOpen));
+              toggle.setAttribute(
+                "aria-label",
+                isOpen ? "Close navigation menu" : "Open navigation menu",
+              );
+            };
+
+            toggle.addEventListener("click", () => {
+              setMenuOpen(toggle.getAttribute("aria-expanded") !== "true");
             });
 
-          document.querySelectorAll("#mobile-menu a").forEach((link) => {
-            link.addEventListener("click", () => {
-              document.getElementById("mobile-menu").classList.add("hidden");
+            menu.querySelectorAll("a").forEach((link) => {
+              link.addEventListener("click", () => {
+                setMenuOpen(false);
+                const href = link.getAttribute("href") || "";
+
+                if (href.startsWith("#")) {
+                  const destination = document.getElementById(href.slice(1));
+                  const heading = destination?.querySelector("h1, h2");
+
+                  window.requestAnimationFrame(() => {
+                    if (heading instanceof HTMLElement) {
+                      heading.focus({ preventScroll: true });
+                    }
+                  });
+                } else {
+                  toggle.focus();
+                }
+              });
+            });
+
+            document.addEventListener("keydown", (event) => {
+              if (
+                event.key === "Escape" &&
+                toggle.getAttribute("aria-expanded") === "true"
+              ) {
+                setMenuOpen(false);
+                toggle.focus();
+              }
             });
           });
         </script>

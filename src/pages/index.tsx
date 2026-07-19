@@ -1,83 +1,325 @@
+import {
+  BUSINESS_HOURS,
+  BUSINESS_NAME,
+  COUNTIES,
+  EMAIL,
+  EMAIL_HREF,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+  SERVICES,
+} from "../business";
+import { ArrowUpRightIcon, MailIcon, PhoneIcon } from "../components/icons";
 import { Layout } from "../components/layout";
 import type { App } from "../server";
 
-const images = [
-  "/static/new/curtain.jpg",
-  "/static/gallery/7.jpeg",
-  "/static/gallery/4.jpeg",
-  "/static/gallery/11.jpeg",
+const projects = [
+  {
+    imageKey: "new-5",
+    width: 2869,
+    height: 1515,
+    alt: "Completed commercial storefront with aluminum-framed windows and glass entrance doors",
+    title: "Storefront renovation",
+    detail: "Window wall, transoms, and glass entrances",
+    className: "project project--feature",
+    sizes: "(min-width: 1280px) 735px, (min-width: 768px) 58vw, 100vw",
+  },
+  {
+    imageKey: "gallery-11",
+    width: 960,
+    height: 1280,
+    alt: "Aluminum-framed automatic glass entrance inside a commercial building",
+    title: "Automatic entrance",
+    detail: "Interior storefront framing and doors",
+    className: "project project--tall",
+    sizes: "(min-width: 1280px) 520px, (min-width: 768px) 42vw, 100vw",
+  },
+  {
+    imageKey: "gallery-15",
+    width: 960,
+    height: 1280,
+    alt: "Dark-framed window installation on a South Florida residence",
+    title: "Residential windows",
+    detail: "Custom openings and dark aluminum frames",
+    className: "project",
+    sizes: "(min-width: 1280px) 405px, (min-width: 768px) 33vw, 100vw",
+  },
+  {
+    imageKey: "gallery-1",
+    width: 1280,
+    height: 622,
+    alt: "Double glass entrance doors with aluminum storefront framing",
+    title: "Storefront entrance",
+    detail: "Double doors and surrounding glass",
+    className: "project project--wide",
+    sizes: "(min-width: 1280px) 835px, (min-width: 768px) 66vw, 100vw",
+  },
 ];
 
-const services = [
+const galleryProjects = [
   {
-    title: "Curtain Wall Systems",
-    description:
-      "Enhance your building's appearance and functionality with our advanced curtain wall systems.",
+    imageKey: "gallery-12",
+    width: 300,
+    height: 400,
+    alt: "Automatic sliding glass doors set within a commercial aluminum storefront",
+    title: "Automatic sliding entrance",
   },
   {
-    title: "Windows",
-    description:
-      "Discover high-quality and energy-efficient window solutions for your commercial or residential needs.",
+    imageKey: "gallery-9",
+    width: 960,
+    height: 1280,
+    alt: "Floor-to-ceiling commercial window wall and glass door installation",
+    title: "Commercial window wall",
   },
   {
-    title: "Storefront Frames",
-    description:
-      "Create an inviting storefront with our durable and stylish frame options.",
+    imageKey: "new-4",
+    width: 3024,
+    height: 2205,
+    alt: "Completed automatic glass entrance and storefront windows",
+    title: "Automatic doors and storefront",
   },
   {
-    title: "Swinging or Sliding Doors",
-    description:
-      "Upgrade your entrances with our modern and functional swinging or sliding door solutions.",
+    imageKey: "new-2",
+    width: 3000,
+    height: 1972,
+    alt: "Wide commercial storefront window and entrance installation",
+    title: "Commercial storefront glazing",
+  },
+  {
+    imageKey: "gallery-7",
+    width: 960,
+    height: 1280,
+    alt: "Commercial aluminum windows installed during building construction",
+    title: "Commercial window installation",
+  },
+  {
+    imageKey: "new-1",
+    width: 1985,
+    height: 3576,
+    alt: "Two-story commercial building with aluminum window systems",
+    title: "Two-story window system",
+  },
+  {
+    imageKey: "gallery-4",
+    width: 500,
+    height: 375,
+    alt: "Commercial storefront framing and glass installed during construction",
+    title: "New construction storefront",
+  },
+  {
+    imageKey: "gallery-10",
+    width: 960,
+    height: 1280,
+    alt: "Horizontal clerestory windows installed on a commercial building",
+    title: "Commercial clerestory windows",
+  },
+  {
+    imageKey: "new-6",
+    width: 2904,
+    height: 1556,
+    alt: "Completed commercial window wall wrapping a building entrance",
+    title: "Wraparound storefront",
+  },
+  {
+    imageKey: "new-3",
+    width: 2134,
+    height: 2377,
+    alt: "Upper and lower commercial window bands on a finished building",
+    title: "Commercial window bands",
   },
 ];
+
+function getProjectSrcSet(imageKey: string, width: number) {
+  const candidates: string[] = [];
+
+  if (width > 640) {
+    candidates.push(`/static/optimized/${imageKey}-640.webp 640w`);
+  }
+
+  if (width > 1280) {
+    candidates.push(`/static/optimized/${imageKey}-1280.webp 1280w`);
+  }
+
+  candidates.push(`/static/optimized/${imageKey}-full.webp ${width}w`);
+  return candidates.join(", ");
+}
+
+function ResponsiveProjectImage({
+  imageKey,
+  width,
+  height,
+  alt,
+  sizes,
+  loading = "lazy",
+  fetchPriority,
+}: {
+  imageKey: string;
+  width: number;
+  height: number;
+  alt: string;
+  sizes: string;
+  loading?: "eager" | "lazy";
+  fetchPriority?: "high";
+}) {
+  return (
+    <img
+      src={`/static/optimized/${imageKey}-full.webp`}
+      srcSet={getProjectSrcSet(imageKey, width)}
+      sizes={sizes}
+      width={width}
+      height={height}
+      alt={alt}
+      loading={loading}
+      decoding="async"
+      fetchpriority={fetchPriority}
+    />
+  );
+}
 
 function HeroSection() {
   return (
-    <section class="pattern relative z-10 w-full border-b bg-blue-100 pb-12 pt-2 shadow sm:pt-4 md:pt-12">
-      <div id="home" class="absolute -top-20"></div>
-      <div class="mx-auto grid max-w-screen-xl px-4 py-8 lg:grid-cols-12 lg:gap-8 lg:py-8 xl:gap-0">
-        <div class="mr-auto place-self-center text-center md:text-left lg:col-span-7">
-          <h1 class="mb-4 max-w-2xl text-4xl leading-none tracking-tight md:text-5xl xl:text-6xl">
-            Glass Installation in South Florida
-          </h1>
-          <p class="max-w-2xl font-light text-gray-600 md:text-lg lg:text-xl">
-            Our company believes in the core values of customer satisfaction,
-            dependability, and integrity, as these values shape our employees
-            and the quality of our work.
-          </p>
-          <blockquote class="py-4 text-xl font-semibold text-gray-900">
-            <p>
-              Ready to <i>&quot;Let the Light in&quot;</i>?
-            </p>
-          </blockquote>
-          <a
-            href="#contact"
-            class="inline-flex items-center justify-center rounded-lg border bg-gray-700 px-5 py-3 text-center text-base font-medium text-white hover:border-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:ring-4"
-          >
-            Contact Us
+    <section id="home" class="hero" aria-labelledby="hero-title">
+      <div class="hero__content">
+        <p class="hero__kicker">Commercial + residential glazing</p>
+        <h1 id="hero-title">Glass installation, built for South Florida.</h1>
+        <p class="hero__lede">
+          {BUSINESS_NAME} installs commercial and residential storefronts,
+          curtain wall systems, windows, and glass doors.
+        </p>
+
+        <div class="hero__actions">
+          <a class="button button--light" href={PHONE_HREF}>
+            <PhoneIcon />
+            Call {PHONE_DISPLAY}
+          </a>
+          <a class="text-link text-link--on-dark" href="#work">
+            See recent work
+            <ArrowUpRightIcon />
           </a>
         </div>
 
-        <div class="order-first mb-4 flex flex-col items-center gap-4 text-center md:text-left lg:order-none lg:col-span-5 lg:mt-0 lg:flex">
-          <img
-            priority
-            width="500"
-            height="300"
-            src="/static/gallery/4.jpeg"
-            alt="mockup"
-            class="hidden lg:block"
-          />
-          <img
-            priority
-            width="500"
-            height="300"
-            src="/static/gallery/4.jpeg"
-            alt="mockup"
-            class="lg:hidden"
-          />
-          <div class="italic">
-            A recent gas station we serviced in Palm Beach
+        <ul class="hero__facts" aria-label="Company highlights">
+          <li>Family-owned</li>
+          <li>Commercial &amp; residential</li>
+          <li>Serving {COUNTIES.length} Florida counties</li>
+        </ul>
+      </div>
+
+      <figure class="hero__media">
+        <ResponsiveProjectImage
+          imageKey="gallery-2"
+          width={1280}
+          height={960}
+          alt="South Florida commercial building with completed storefront glazing"
+          sizes="(min-width: 960px) 54vw, 100vw"
+          loading="eager"
+          fetchPriority="high"
+        />
+        <figcaption>
+          <span>Commercial storefront and entrance system</span>
+          <span>South Florida</span>
+        </figcaption>
+      </figure>
+    </section>
+  );
+}
+
+function ServicesSection() {
+  return (
+    <section
+      id="services"
+      class="section section--services"
+      aria-labelledby="services-title"
+    >
+      <div class="section-shell services-layout">
+        <div class="services-intro">
+          <h2 id="services-title" tabIndex={-1}>
+            A clear scope for every opening.
+          </h2>
+          <p>
+            From commercial building envelopes to residential window openings,
+            our work centers on the systems that bring in light, create access,
+            and finish a property.
+          </p>
+          <a class="text-link" href="#contact">
+            Discuss your project
+            <ArrowUpRightIcon />
+          </a>
+        </div>
+
+        <div class="service-list">
+          {SERVICES.map((service) => (
+            <article class="service-row" key={service.title}>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function WorkSection() {
+  return (
+    <section
+      id="work"
+      class="section section--work"
+      aria-labelledby="work-title"
+    >
+      <div class="section-shell">
+        <div class="section-heading section-heading--split">
+          <div>
+            <h2 id="work-title" tabIndex={-1}>
+              Work you can inspect.
+            </h2>
           </div>
+          <p>
+            Real storefronts, entrances, curtain wall, and window installations
+            from commercial and residential projects across South Florida.
+          </p>
+        </div>
+
+        <div class="project-grid">
+          {projects.map((project) => (
+            <figure class={project.className} key={project.imageKey}>
+              <div class="project__image">
+                <ResponsiveProjectImage
+                  imageKey={project.imageKey}
+                  width={project.width}
+                  height={project.height}
+                  alt={project.alt}
+                  sizes={project.sizes}
+                />
+              </div>
+              <figcaption>
+                <strong>{project.title}</strong>
+                <span>{project.detail}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <div class="archive-heading">
+          <h3>More from the project archive</h3>
+          <p>
+            A broader look at storefront systems, entrances, window walls, and
+            construction-stage glazing.
+          </p>
+        </div>
+
+        <div class="archive-grid">
+          {galleryProjects.map((project) => (
+            <figure class="archive-project" key={project.imageKey}>
+              <ResponsiveProjectImage
+                imageKey={project.imageKey}
+                width={project.width}
+                height={project.height}
+                alt={project.alt}
+                sizes="(min-width: 1024px) 405px, (min-width: 768px) calc(50vw - 2rem), calc(100vw - 2.5rem)"
+              />
+              <figcaption>{project.title}</figcaption>
+            </figure>
+          ))}
         </div>
       </div>
     </section>
@@ -86,218 +328,198 @@ function HeroSection() {
 
 function AboutSection() {
   return (
-    <section class="relative w-full bg-gray-100 py-12">
-      <div id="about" class="absolute -top-20"></div>
-      <div class="container mx-auto px-4">
-        <div class="mx-auto max-w-3xl text-center">
-          <h2 class="mb-4 w-full text-4xl leading-none tracking-tight md:text-4xl xl:text-5xl">
-            About Our Services
+    <section
+      id="about"
+      class="section section--about"
+      aria-labelledby="about-title"
+    >
+      <div class="section-shell about-layout">
+        <div class="about-copy">
+          <h2 id="about-title" tabIndex={-1}>
+            Family-owned. Focused on dependable work.
           </h2>
-          <p class="mb-8 text-lg text-gray-600">
-            Knowles Glass &amp; Glazing is a family-owned business, operating
-            out of South Florida. In our years of operation, we have provided
-            quality services to our customers, and we pride ourselves on
-            dependability, productivity, and professionalism as we provide our
-            services to our customers.
-            <br />
-            <br />
-            We do both <b>commercial</b> and <b>residential </b>
-            buildings.
+          <p>
+            {BUSINESS_NAME} is a South Florida family-owned business serving
+            both commercial and residential projects. Dependability,
+            productivity, professionalism, and customer satisfaction guide how
+            we approach each job.
           </p>
         </div>
-        <div class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
-          <div class="overflow-hidden rounded-lg bg-white shadow">
-            <img
-              width="300"
-              height="100"
-              src={"/static/gallery/4.jpeg"}
-              alt="picture of commerical building"
-              class="h-48 w-full object-cover object-center"
-            />
-            <div class="p-4">
-              <h3 class="text-2xl font-semibold text-gray-800">
-                Commercial Construction
-              </h3>
-            </div>
-          </div>
 
-          <div class="overflow-hidden rounded-lg bg-white shadow">
-            <img
-              width="500"
-              height="300"
-              src={"/static/gallery/15.jpeg"}
-              alt="picture of commerical building"
-              class="h-48 w-full object-cover object-center"
-            />
-            <div class="p-4">
-              <h3 class="text-2xl font-semibold text-gray-800">
-                Residential Buildings
-              </h3>
-            </div>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {services.map((service, index) => (
-            <div key={index} class="overflow-hidden rounded-lg bg-white shadow">
-              <img
-                width="300"
-                height="100"
-                src={images[index]}
-                alt={service.title}
-                class="h-48 w-full object-cover object-center"
-              />
-              <div class="p-4">
-                <h3 class="text-2xl font-semibold text-gray-800">
-                  {service.title}
-                </h3>
-                <p class="mt-2 text-gray-600">{service.description}</p>
+        <div class="project-start">
+          <h3>A straightforward start</h3>
+          <ol>
+            <li>
+              <span>1</span>
+              <div>
+                <strong>Share the project</strong>
+                <p>Tell us the property location, project type, and timing.</p>
               </div>
-            </div>
+            </li>
+            <li>
+              <span>2</span>
+              <div>
+                <strong>Review the scope</strong>
+                <p>
+                  We will discuss the opening, system, and next details needed.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span>3</span>
+              <div>
+                <strong>Coordinate next steps</strong>
+                <p>Call or email our team to move the conversation forward.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ServiceAreaSection() {
+  return (
+    <section
+      id="service-area"
+      class="section section--area"
+      aria-labelledby="service-area-title"
+    >
+      <div class="section-shell area-layout">
+        <div class="area-copy">
+          <h2 id="service-area-title" tabIndex={-1}>
+            Serving South Florida from the Gulf Coast to Miami-Dade.
+          </h2>
+          <p>
+            Have a project in the region? Call with the property location and
+            scope so our team can confirm the next step.
+          </p>
+          <a class="button button--brand" href={PHONE_HREF}>
+            <PhoneIcon />
+            Check your project location
+          </a>
+        </div>
+
+        <ul class="county-list" aria-label="Counties served">
+          {COUNTIES.map((county) => (
+            <li key={county}>{county}</li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
 }
 
-function Gallery() {
+function ContactSection() {
   return (
-    <section class="relative flex w-full flex-col items-center bg-gray-100 px-2 py-12">
-      <div id="gallery" class="absolute -top-20"></div>
-
-      <h2 class="mb-8 max-w-2xl text-center text-4xl leading-none tracking-tight md:text-4xl xl:text-5xl">
-        Our Work
-      </h2>
-
-      <p class="mb-8 w-full px-4 text-center text-lg text-gray-600 md:w-1/2 md:px-2">
-        We have worked with a wide variety of commerical, and residential
-        buildings, including gas stations, supermarkets, churches, and more!
-        Checkout out our gallery below!
-      </p>
-
-      <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4 md:gap-4">
-        <div class="flex flex-col gap-4">
-          <img src="/static/gallery/12.jpeg" width="300" height="100" alt="" />
-          <img src="/static/gallery/1.jpeg" width="300" height="100" alt="" />
-          <img width="300" height="100" src="/static/gallery/9.jpeg" alt="" />
-          <img width="300" height="100" src="/static/new/4.jpg" alt="" />
-        </div>
-
-        <div class="flex flex-col gap-4">
-          <img src="/static/new/5.jpg" width="300" height="100" alt="" />
-          <img src="/static/new/2.jpg" width="300" height="100" alt="" />
-          <img src="/static/gallery/11.jpeg" width="300" height="100" alt="" />
-          <img src="/static/gallery/7.jpeg" width="300" height="100" alt="" />
-        </div>
-
-        <div class="flex flex-col gap-4">
-          <img src="/static/new/1.jpg" width="300" height="100" alt="" />
-          <img src="/static/gallery/4.jpeg" width="300" height="100" alt="" />
-          <img src="/static/gallery/10.jpeg" width="300" height="100" alt="" />
-        </div>
-        <div class="flex flex-col gap-4">
-          <img src="/static/new/6.jpg" width="300" height="100" alt="" />
-          <img src="/static/gallery/15.jpeg" width="300" height="100" alt="" />
-          <img src="/static/new/4.jpg" width="300" height="100" alt="" />
-          <img src="/static/new/3.jpg" width="300" height="100" alt="" />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Contact() {
-  return (
-    <section class="pattern-secondary relative z-10 w-full py-24 shadow">
-      <div class="container mx-auto flex flex-col items-center">
-        <div id="contact" class="absolute -top-20"></div>
-        <h2 class="mb-8 max-w-2xl text-center text-4xl leading-none tracking-tight md:text-4xl xl:text-5xl">
-          Contact Us
-        </h2>
-
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-          <div class="rounded-lg bg-white p-6 shadow-lg">
-            <h3 class="mb-2 text-xl font-semibold">Hours</h3>
-            <p>Monday – Friday</p>
-            <p>8:00 a.m. - 4:00 p.m.</p>
-          </div>
-          <div class="rounded-lg bg-white p-6 shadow-lg">
-            <h3 class="mb-2 text-xl font-semibold">Phone</h3>
-            <p>561-906-5438</p>
-          </div>
-          <div class="rounded-lg bg-white p-6 shadow-lg">
-            <h3 class="mb-2 text-xl font-semibold">Email</h3>
-            <p>Knowlesglass7@gmail.com</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function CountiesSection() {
-  return (
-    <section class="container relative mx-auto w-full py-12">
-      <div id="location" class="absolute -top-20"></div>
-
-      <h2 class="mb-12 w-full text-center text-4xl leading-none tracking-tight md:text-4xl xl:text-5xl">
-        Counties We Service
-      </h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 md:gap-12">
+    <section
+      id="contact"
+      class="contact-section"
+      aria-labelledby="contact-title"
+    >
+      <div class="section-shell contact-layout">
         <div>
-          <ul class="flex h-full w-full flex-col justify-center gap-4 text-center text-2xl">
-            <li>Manatee County</li>
-            <li>Hardee County</li>
-            <li>Highlands County</li>
-            <li>Okeechobee County</li>
-            <li>St Lucie County</li>
-            <li>Sarasota County</li>
-            <li>DeSOTO County</li>
-            <li>Martin County</li>
-            <li>Charlotte County</li>
-            <li>Glades County</li>
-            <li>Lee County</li>
-            <li>Hendry County</li>
-            <li>Palm Beach County</li>
-            <li>Collier County</li>
-            <li>Broward County</li>
-            <li>Monroe County</li>
-            <li>Miami Dade</li>
-          </ul>
+          <h2 id="contact-title" tabIndex={-1}>
+            Tell us what you are planning.
+          </h2>
+          <p class="contact-intro">
+            Call to discuss your project, or email the location, scope, and any
+            plans or photos you already have.
+          </p>
         </div>
-        <div class="order-first col-span-2 md:order-none">
-          <img
-            src="/static/florida5.png"
-            width="1200"
-            height="800"
-            alt="a map of florida"
-          />
-        </div>
+
+        <address class="contact-details">
+          <a href={PHONE_HREF}>
+            <span class="contact-details__icon">
+              <PhoneIcon />
+            </span>
+            <span>
+              <small>Call us</small>
+              <strong>{PHONE_DISPLAY}</strong>
+            </span>
+            <ArrowUpRightIcon />
+          </a>
+
+          <a href={EMAIL_HREF}>
+            <span class="contact-details__icon">
+              <MailIcon />
+            </span>
+            <span>
+              <small>Email project details</small>
+              <strong>{EMAIL}</strong>
+            </span>
+            <ArrowUpRightIcon />
+          </a>
+
+          <div class="contact-hours">
+            <small>Business hours</small>
+            <strong>{BUSINESS_HOURS.display}</strong>
+          </div>
+        </address>
       </div>
     </section>
   );
 }
 
-function CopyrightFooter() {
+function Footer() {
   return (
-    <footer class="w-full py-8 text-center text-gray-600">
-      &copy; {new Date().getFullYear()} Knowles Glass & Glazing. All Rights
-      Reserved.
+    <footer class="site-footer">
+      <div class="section-shell site-footer__inner">
+        <div>
+          <img
+            src="/static/logo.png"
+            alt={BUSINESS_NAME}
+            width="500"
+            height="250"
+            loading="lazy"
+          />
+          <p>Commercial and residential glass installation in South Florida.</p>
+        </div>
+        <div class="site-footer__links">
+          <a href="#services">Services</a>
+          <a href="#work">Our work</a>
+          <a href="#service-area">Service area</a>
+          <a href="#home">Back to top</a>
+        </div>
+        <p class="site-footer__copyright">
+          &copy; {new Date().getFullYear()} {BUSINESS_NAME}. All rights
+          reserved.
+        </p>
+      </div>
     </footer>
+  );
+}
+
+function MobileContactBar() {
+  return (
+    <nav class="mobile-contact-bar" aria-label={`Contact ${BUSINESS_NAME}`}>
+      <a href={PHONE_HREF}>
+        <PhoneIcon />
+        Call now
+      </a>
+      <a href={EMAIL_HREF}>
+        <MailIcon />
+        Email
+      </a>
+    </nav>
   );
 }
 
 function LandingPage() {
   return (
-    <main class="flex min-h-screen flex-col items-center justify-between">
-      <HeroSection />
-      <AboutSection />
-      <CountiesSection />
-      <Contact />
-      <Gallery />
-      <CopyrightFooter />
-    </main>
+    <>
+      <main id="main-content" tabIndex={-1}>
+        <HeroSection />
+        <ServicesSection />
+        <WorkSection />
+        <AboutSection />
+        <ServiceAreaSection />
+        <ContactSection />
+      </main>
+      <Footer />
+      <MobileContactBar />
+    </>
   );
 }
 
